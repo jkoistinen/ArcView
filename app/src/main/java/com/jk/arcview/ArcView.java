@@ -15,6 +15,8 @@ import android.view.View;
 
 public class ArcView extends View {
 
+    private Paint paint;
+
     private Integer mDefaultTotalPieces = 100;
     private Integer mTotalPieces;
 
@@ -25,10 +27,12 @@ public class ArcView extends View {
     public ArcView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        init();
+
         TypedArray styledAttributesFromXML = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ArcView, 0, 0);
 
         mTotalPieces = styledAttributesFromXML.getInteger(R.styleable.ArcView_totalPieces, mDefaultTotalPieces);
-        
+
     }
 
     public ArcView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -55,13 +59,34 @@ public class ArcView extends View {
         return new RectF(0, 0, width - padding, height - padding);
     }
 
+    private void init() {
+        paint = new Paint();
+        paint.setStyle(Paint.Style.FILL);
+    }
+
+    public void drawFullArc(Canvas canvas, int size, Paint paint) {
+        Float startPoint = 0.0f;
+
+        int colorAccent = getResources().getColor(R.color.colorAccent);
+        int colorPrimary = getResources().getColor(R.color.colorPrimary);
+
+        for (int i = 0; i < mTotalPieces; i++) {
+
+            if(i % 2 == 0) {
+                paint.setColor(colorAccent);
+            } else {
+                paint.setColor(colorPrimary);
+            }
+
+            canvas.drawArc(getOval(size, size), startPoint, getPieceAngle(),true, paint);
+            startPoint = startPoint + getPieceAngle();
+
+        }
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-        Paint paint = new Paint();
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(getResources().getColor(R.color.colorAccent));
 
         int w = getWidth();
         int h = getHeight();
@@ -69,13 +94,7 @@ public class ArcView extends View {
         //Choose the smaller
         int size = Math.min(w, h);
 
-        canvas.drawArc(getOval(size, size), 0.0f, 45.0f,true, paint);
-        canvas.drawArc(getOval(size, size), 180.0f, 45.0f,true, paint);
-
-        paint.setColor(getResources().getColor(R.color.colorPrimary));
-
-        canvas.drawArc(getOval(size, size), 90.0f, 45.0f,true, paint);
-        canvas.drawArc(getOval(size, size), 270.0f, 45.0f,true, paint);
+        drawFullArc(canvas, size, paint);
 
     }
 }
