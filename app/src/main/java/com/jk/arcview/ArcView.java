@@ -1,10 +1,12 @@
 package com.jk.arcview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -13,12 +15,20 @@ import android.view.View;
 
 public class ArcView extends View {
 
+    private Integer mDefaultTotalPieces = 100;
+    private Integer mTotalPieces;
+
     public ArcView(Context context) {
         super(context);
     }
 
     public ArcView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        TypedArray styledAttributesFromXML = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ArcView, 0, 0);
+
+        mTotalPieces = styledAttributesFromXML.getInteger(R.styleable.ArcView_totalPieces, mDefaultTotalPieces);
+        
     }
 
     public ArcView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -27,6 +37,15 @@ public class ArcView extends View {
 
     public ArcView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+    }
+
+    public float getPieceAngle(){
+        Float cycle = 360.0f;
+        Float mTotalPiecesFloat = (float)mTotalPieces;
+
+        Float pieceAngle = (cycle / mTotalPiecesFloat);
+
+        return pieceAngle;
     }
 
     public RectF getOval(int width, int height){
@@ -57,8 +76,6 @@ public class ArcView extends View {
 
         canvas.drawArc(getOval(size, size), 90.0f, 45.0f,true, paint);
         canvas.drawArc(getOval(size, size), 270.0f, 45.0f,true, paint);
-
-        canvas.
 
     }
 }
