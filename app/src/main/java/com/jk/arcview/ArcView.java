@@ -8,6 +8,8 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 
 /**
  * Created by jk on 2017-01-26.
@@ -64,9 +66,16 @@ public class ArcView extends View {
         paint.setStyle(Paint.Style.FILL);
     }
 
+    public void setTotalPieces(int pieces){
+        if(pieces < 1) {
+            pieces = 1;
+        }
+        mTotalPieces = pieces;
+        invalidate();
+    }
+
     public void drawFullArc(Canvas canvas, int size, Paint paint) {
         Float startPoint = 0.0f;
-
         int colorAccent = getResources().getColor(R.color.colorAccent);
         int colorPrimary = getResources().getColor(R.color.colorPrimary);
 
@@ -95,6 +104,13 @@ public class ArcView extends View {
         int size = Math.min(w, h);
 
         drawFullArc(canvas, size, paint);
+
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
+        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
 
     }
 }
