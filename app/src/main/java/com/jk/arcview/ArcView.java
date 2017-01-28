@@ -24,6 +24,8 @@ public class ArcView extends View {
 
     public ArcView(Context context) {
         super(context);
+
+        init();
     }
 
     public ArcView(Context context, AttributeSet attrs) {
@@ -54,11 +56,14 @@ public class ArcView extends View {
         return pieceAngle;
     }
 
-    public RectF getOval(int width, int height){
+    public RectF getOval(int radius){
 
-        int padding = 10;
+        float left = (float) (getWidth()/2)-radius;
+        float top = (float) (getHeight()/2)-radius;
+        float right = (float) (getWidth()/2)+radius;
+        float bottom = (float) (getHeight()/2+radius);
 
-        return new RectF(0, 0, width - padding, height - padding);
+        return new RectF(left, top, right , bottom);
     }
 
     private void init() {
@@ -79,6 +84,10 @@ public class ArcView extends View {
         int colorAccent = getResources().getColor(R.color.colorAccent);
         int colorPrimary = getResources().getColor(R.color.colorPrimary);
 
+        if(mTotalPieces == null){
+            mTotalPieces = mDefaultTotalPieces;
+        }
+
         for (int i = 0; i < mTotalPieces; i++) {
 
             if(i % 2 == 0) {
@@ -86,11 +95,14 @@ public class ArcView extends View {
             } else {
                 paint.setColor(colorPrimary);
             }
+            int radius = size/2;
 
-            canvas.drawArc(getOval(size, size), startPoint, getPieceAngle(),true, paint);
+            canvas.drawArc(getOval(radius), startPoint, getPieceAngle(),true, paint);
             startPoint = startPoint + getPieceAngle();
 
         }
+
+        canvas.drawCircle(canvas.getWidth()/2,canvas.getHeight()/2,200, paint);
     }
 
     @Override
@@ -107,10 +119,4 @@ public class ArcView extends View {
 
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
-
-    }
 }
