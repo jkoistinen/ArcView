@@ -4,6 +4,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Toast;
@@ -18,9 +22,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //setContentView(arcView);
         setContentView(R.layout.activity_main);
 
+        //arcView = new ArcView(this);
         arcView = (ArcView) findViewById(R.id.arcView);
+
+        arcView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                scaleAnimation.setDuration(500);
+                scaleAnimation.setRepeatCount(1);
+                scaleAnimation.setRepeatMode(Animation.REVERSE);
+                v.startAnimation(scaleAnimation);
+            }
+        });
 
         seekBar = (SeekBar) findViewById(R.id.seekBar);
 
