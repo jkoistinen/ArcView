@@ -15,7 +15,9 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.view.animation.Transformation;
 import android.widget.Toast;
 
@@ -139,7 +141,59 @@ private class GestureListener extends GestureDetector.SimpleOnGestureListener {
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         Log.d("TAG", "onFling");
-        return super.onFling(e1, e2, velocityX, velocityY);
+
+        float distance = 8000f;
+        float scale = getContext().getResources().getDisplayMetrics().density;
+        ArcView.this.setCameraDistance(distance * scale);
+
+        if(e1.getY() - e2.getY() > 50){ //Up
+            swipeAnimate("up");
+            return true;
+        }
+
+        if(e2.getY() - e1.getY() > 50){ //Down
+            swipeAnimate("down");
+            return true;
+        }
+
+        if(e1.getX() - e2.getX() > 50){ //Left
+            swipeAnimate("left");
+            return true;
+        }
+
+        if(e2.getX() - e1.getX() > 50) { //Right
+            swipeAnimate("right");
+            return true;
+        }
+        else {
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
+    }
+
+    private void swipeAnimate(String direction) {
+        String property = null;
+        Float start = null;
+        Float end = null;
+
+        switch(direction) {
+            case "left":
+                property = "rotationY"; start = 360f; end = 0f;
+                break;
+            case "up":
+                property = "rotationX"; start = 0f; end = 360f;
+                break;
+            case "right":
+                property = "rotationY"; start = 0f; end = 360f;
+                break;
+            case "down":
+                property = "rotationX"; start = 360f; end = 0f;
+                break;
+
+        }
+
+        ObjectAnimator animation = ObjectAnimator.ofFloat(ArcView.this, property, start, end);
+        animation.setDuration(3000);
+        animation.start();
     }
 
     @Override
