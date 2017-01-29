@@ -30,19 +30,6 @@ public class MainActivity extends AppCompatActivity {
         //arcView = new ArcView(this);
         arcView = (ArcView) findViewById(R.id.arcView);
 
-        //Create Animation
-        scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        scaleAnimation.setDuration(500);
-        scaleAnimation.setRepeatCount(1);
-        scaleAnimation.setRepeatMode(Animation.REVERSE);
-
-        arcView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.startAnimation(scaleAnimation);
-            }
-        });
-
         seekBar = (SeekBar) findViewById(R.id.seekBar);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

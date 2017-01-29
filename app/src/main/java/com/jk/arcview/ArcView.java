@@ -1,14 +1,18 @@
 package com.jk.arcview;
 
+import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.v4.animation.ValueAnimatorCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -25,6 +29,8 @@ public class ArcView extends View {
 
     private final Integer mDefaultTotalPieces = 100;
     private Integer mTotalPieces;
+
+    private GestureDetector mDetector;
 
     public ArcView(Context context) {
         super(context);
@@ -59,8 +65,12 @@ public class ArcView extends View {
     }
 
     private void init() {
-        paint = new Paint();
+        paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setStyle(Paint.Style.FILL);
+
+        mDetector = new GestureDetector(getContext(), new GestureListener());
+        mDetector.setIsLongpressEnabled(false);
+
     }
 
     public void setTotalPieces(int pieces){
@@ -102,6 +112,7 @@ public class ArcView extends View {
         }
         paint.setColor(colorPrimary);
         canvas.drawCircle(canvas.getWidth()/2,canvas.getHeight()/2,200, paint);
+
     }
 
     @Override
@@ -120,14 +131,27 @@ public class ArcView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
+        return mDetector.onTouchEvent(event);
 
-
-                Toast.makeText(getContext(), "Click", Toast.LENGTH_SHORT).show();
-
-        }
-
-        return super.onTouchEvent(event);
     }
+
+private class GestureListener extends GestureDetector.SimpleOnGestureListener {
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        Log.d("TAG", "onFling");
+        return super.onFling(e1, e2, velocityX, velocityY);
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        Log.d("TAG", "onScroll");
+        return super.onScroll(e1, e2, distanceX, distanceY);
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return true;
+    }
+}
+
 }
