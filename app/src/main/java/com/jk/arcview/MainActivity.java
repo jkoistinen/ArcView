@@ -1,16 +1,13 @@
 package com.jk.arcview;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
 import android.widget.EditText;
 import android.widget.SeekBar;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 

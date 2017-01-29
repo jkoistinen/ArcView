@@ -1,25 +1,17 @@
 package com.jk.arcview;
 
 import android.animation.ObjectAnimator;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.support.v4.animation.ValueAnimatorCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
-import android.view.animation.Transformation;
-import android.widget.Toast;
 
 /**
  * Created by jk on 2017-01-26.
