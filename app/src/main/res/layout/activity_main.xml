@@ -35,14 +35,21 @@
                 android:id="@+id/arcView" />
         </FrameLayout>
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/editText"
-            android:layout_below="@+id/frameLayout" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/editText" />
+
+        </FrameLayout>
+
+
+
 
 </RelativeLayout>

@@ -7,9 +7,11 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+import android.widget.Toast;
 
 /**
  * Created by jk on 2017-01-26.
@@ -18,6 +20,7 @@ import android.view.animation.Transformation;
 public class ArcView extends View {
 
     private Paint paint;
+    private RectF ovalshape;
 
     private Integer mDefaultTotalPieces = 100;
     private Integer mTotalPieces;
@@ -56,16 +59,6 @@ public class ArcView extends View {
         return pieceAngle;
     }
 
-    public RectF getOval(int radius){
-
-        float left = (float) (getWidth()/2)-radius;
-        float top = (float) (getHeight()/2)-radius;
-        float right = (float) (getWidth()/2)+radius;
-        float bottom = (float) (getHeight()/2+radius);
-
-        return new RectF(left, top, right , bottom);
-    }
-
     private void init() {
         paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
@@ -88,6 +81,14 @@ public class ArcView extends View {
             mTotalPieces = mDefaultTotalPieces;
         }
 
+        int radius = size/2;
+        float left = (float) (getWidth()/2)-radius;
+        float top = (float) (getHeight()/2)-radius;
+        float right = (float) (getWidth()/2)+radius;
+        float bottom = (float) (getHeight()/2+radius);
+
+        ovalshape = new RectF(left, top, right , bottom);
+
         for (int i = 0; i < mTotalPieces; i++) {
 
             if(i % 2 == 0) {
@@ -95,13 +96,12 @@ public class ArcView extends View {
             } else {
                 paint.setColor(colorPrimary);
             }
-            int radius = size/2;
 
-            canvas.drawArc(getOval(radius), startPoint, getPieceAngle(),true, paint);
+            canvas.drawArc(ovalshape, startPoint, getPieceAngle(),true, paint);
             startPoint = startPoint + getPieceAngle();
 
         }
-
+        paint.setColor(colorPrimary);
         canvas.drawCircle(canvas.getWidth()/2,canvas.getHeight()/2,200, paint);
     }
 
@@ -119,4 +119,16 @@ public class ArcView extends View {
 
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+
+
+                Toast.makeText(getContext(), "Click", Toast.LENGTH_SHORT).show();
+
+        }
+
+        return super.onTouchEvent(event);
+    }
 }
