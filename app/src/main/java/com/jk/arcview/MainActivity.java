@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar seekBar;
 
     private ArcView arcView;
+    private ScaleAnimation scaleAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +30,15 @@ public class MainActivity extends AppCompatActivity {
         //arcView = new ArcView(this);
         arcView = (ArcView) findViewById(R.id.arcView);
 
+        //Create Animation
+        scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimation.setDuration(500);
+        scaleAnimation.setRepeatCount(1);
+        scaleAnimation.setRepeatMode(Animation.REVERSE);
+
         arcView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ScaleAnimation scaleAnimation = new ScaleAnimation(1f, 0f, 1f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-                scaleAnimation.setDuration(500);
-                scaleAnimation.setRepeatCount(1);
-                scaleAnimation.setRepeatMode(Animation.REVERSE);
                 v.startAnimation(scaleAnimation);
             }
         });
@@ -91,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static Integer tryParse(String text) {
+    private static Integer tryParse(String text) {
         try {
             return Integer.parseInt(text);
         } catch (NumberFormatException e) {

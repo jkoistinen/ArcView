@@ -1,10 +1,12 @@
 package com.jk.arcview;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -20,9 +22,8 @@ import android.widget.Toast;
 public class ArcView extends View {
 
     private Paint paint;
-    private RectF ovalshape;
 
-    private Integer mDefaultTotalPieces = 100;
+    private final Integer mDefaultTotalPieces = 100;
     private Integer mTotalPieces;
 
     public ArcView(Context context) {
@@ -50,13 +51,11 @@ public class ArcView extends View {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public float getPieceAngle(){
+    private float getPieceAngle(){
         Float cycle = 360.0f;
         Float mTotalPiecesFloat = (float)mTotalPieces;
 
-        Float pieceAngle = (cycle / mTotalPiecesFloat);
-
-        return pieceAngle;
+        return (cycle / mTotalPiecesFloat);
     }
 
     private void init() {
@@ -72,14 +71,10 @@ public class ArcView extends View {
         invalidate();
     }
 
-    public void drawFullArc(Canvas canvas, int size, Paint paint) {
+    private void drawFullArc(Canvas canvas, int size, Paint paint) {
         Float startPoint = 0.0f;
-        int colorAccent = getResources().getColor(R.color.colorAccent);
-        int colorPrimary = getResources().getColor(R.color.colorPrimary);
-
-        if(mTotalPieces == null){
-            mTotalPieces = mDefaultTotalPieces;
-        }
+        int colorAccent = ContextCompat.getColor(getContext(), R.color.colorAccent);
+        int colorPrimary = ContextCompat.getColor(getContext(), R.color.colorPrimary);
 
         int radius = size/2;
         float left = (float) (getWidth()/2)-radius;
@@ -87,7 +82,11 @@ public class ArcView extends View {
         float right = (float) (getWidth()/2)+radius;
         float bottom = (float) (getHeight()/2+radius);
 
-        ovalshape = new RectF(left, top, right , bottom);
+        RectF ovalshape = new RectF(left, top, right, bottom);
+
+        if(mTotalPieces == null){
+            mTotalPieces = mDefaultTotalPieces;
+        }
 
         for (int i = 0; i < mTotalPieces; i++) {
 
