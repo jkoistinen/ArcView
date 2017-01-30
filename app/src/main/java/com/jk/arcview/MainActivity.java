@@ -27,13 +27,6 @@ public class MainActivity extends AppCompatActivity {
         //arcView = new ArcView(this);
         arcView = (ArcView) findViewById(R.id.arcView);
 
-        arcView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.startAnimation(scaleAnimation);
-            }
-        });
-
         seekBar = (SeekBar) findViewById(R.id.seekBar);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

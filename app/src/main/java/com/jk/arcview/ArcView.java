@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
 
 /**
  * Created by jk on 2017-01-26.
@@ -119,7 +120,9 @@ public class ArcView extends View {
         //Choose the smaller
         int size = Math.min(w, h);
 
-        drawFullArc(canvas, size, paint);
+       int paddingWithinView = 10;
+
+        drawFullArc(canvas, size-paddingWithinView, paint);
 
     }
 
@@ -185,6 +188,8 @@ private class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
         ObjectAnimator animation = ObjectAnimator.ofFloat(ArcView.this, property, start, end);
         animation.setDuration(3000);
+        animation.setRepeatCount(0);
+        animation.setRepeatMode(Animation.INFINITE);
         animation.start();
     }
 
